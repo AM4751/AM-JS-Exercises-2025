@@ -62,29 +62,57 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        var requestUrl = "TODO"
+    var requestUrl = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic"; // ✅ Correct URL
 
-        d3.json(requestUrl).then(function(data){
-            console.log("DATA:", data)
+    d3.json(requestUrl).then(function(data){
+        console.log("DATA:", data);
 
+        console.log("---------------------");
+        console.log("PART 1...");
 
-            console.log("---------------------")
-            console.log("PART 1...")
+        const drinks = data.drinks; // ✅ This is the correct array
 
+        // C. Number of non-alcoholic drinks
+        console.log("C. Number of non-alcoholic drinks:", drinks.length);
 
+        // D. Loop through each drink, log name and id
+        drinks.forEach(function(drink) {
+            console.log(`Name: ${drink.strDrink}, ID: ${drink.idDrink}`);
+        });
 
+        console.log("---------------------");
+        console.log("PART 2...");
 
+        // A. Display number of drinks
+        document.getElementById("display-drinks-count").textContent = drinks.length;
 
-            console.log("---------------------")
-            console.log("PART 2...")
+        // B. Loop and display drinks
+        const displayDiv = document.getElementById("display-drinks");
 
+        drinks.forEach(function(drink) {
+            const drinkDiv = document.createElement("div");
 
+            const nameP = document.createElement("p");
+            nameP.textContent = drink.strDrink;
 
+            const img = document.createElement("img");
+            img.src = drink.strDrinkThumb;
+            img.alt = drink.strDrink;
+            img.height = 100; // ✅ Set image height to 100px
 
-        })
+            drinkDiv.appendChild(nameP);
+            drinkDiv.appendChild(img);
 
-    </script>
+            displayDiv.appendChild(drinkDiv);
+        });
+
+    }).catch(function(error) {
+        console.error("ERROR:", error);
+    });
+
+</script>
+
 </body>
 </html>

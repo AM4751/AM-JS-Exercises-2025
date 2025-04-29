@@ -60,29 +60,41 @@
 
 
     <script type="text/javascript">
-
-        console.log("---------------------")
-        console.log("PART 1...")
-
-
-
-
-
-        console.log("---------------------")
-        console.log("PART 2...")
-
-
-
-
-
-
-        console.log("---------------------")
-        console.log("PART 3...")
-
-
-
-
-
+        console.log("---------------------");
+        console.log("PART 1...");
+    
+        const tempC = -270;
+        const tempF = (9 / 5) * tempC + 32;
+        console.log("Celsius:", tempC);
+        console.log("Fahrenheit:", tempF.toFixed(2));
+    
+        console.log("---------------------");
+        console.log("PART 2...");
+    
+        function calculateTemp(tempC) {
+            return (9 / 5) * tempC + 32;
+        }
+    
+        const convertedTempF = calculateTemp(-270);
+        console.log("Celsius:", -270);
+        console.log("Fahrenheit:", convertedTempF.toFixed(2));
+    
+        console.log("---------------------");
+        console.log("PART 3...");
+    
+        document.getElementById("calculate").addEventListener("click", function () {
+            const inputCelsius = parseFloat(document.getElementById("input-temp-c").value);
+            const outputFahrenheit = document.getElementById("display-temp-f");
+    
+            if (isNaN(inputCelsius)) {
+                outputFahrenheit.textContent = "Invalid input";
+                return;
+            }
+    
+            const resultF = calculateTemp(inputCelsius);
+            outputFahrenheit.textContent = resultF.toFixed(2) + "°F";
+        });
     </script>
+    
 </body>
 </html>

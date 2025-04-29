@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Umbrella</title>
 </head>
+
 <body>
     <h1>Umbrella</h1>
     <a href="../index.html">Home</a>
@@ -11,20 +13,25 @@
     <h2>Part 1</h2>
     <p>
 
-        Write a program to provide instructions based on whether or not it is raining out, and whether or not the user owns an umbrella.
+        Write a program to provide instructions based on whether or not it is raining out, and whether or not the user
+        owns an umbrella.
 
-        Model the concept of whether or not its raining in a variable called <code>isRaining</code>, assign it a boolean value of choice, and log it to the console.
+        Model the concept of whether or not its raining in a variable called <code>isRaining</code>, assign it a boolean
+        value of choice, and log it to the console.
 
-        Model the concept of whether or not the user owns an umbrella in a variable called <code>ownsUmbrella</code>, assign it a boolean value of choice, and log it to the console.
+        Model the concept of whether or not the user owns an umbrella in a variable called <code>ownsUmbrella</code>,
+        assign it a boolean value of choice, and log it to the console.
     </p>
     <p>
         Write an "if" statement to provide instructions to the user depending on the values of these variables:
-        <ul>
-            <li>In the event it is <strong>not raining</strong>, the program should log the message "Skies are clear" to the console.</li>
-            <li>In the event it <strong>is raining</strong>, the program should instruct the user to either "Buy an umbrella" or "Bring your umbrella", as applicable, depending on whether or not they own an umbrella.
-                Log this message to the console.
-            </li>
-        </ul>
+    <ul>
+        <li>In the event it is <strong>not raining</strong>, the program should log the message "Skies are clear" to the
+            console.</li>
+        <li>In the event it <strong>is raining</strong>, the program should instruct the user to either "Buy an
+            umbrella" or "Bring your umbrella", as applicable, depending on whether or not they own an umbrella.
+            Log this message to the console.
+        </li>
+    </ul>
     </p>
 
 
@@ -37,7 +44,9 @@
         It should not log anything to the console.
     </p>
     <p>
-        Invoke the function four different times using different combinations of boolean values for <code>isRaining</code> and <code>ownsUmbrella</code>, and log the resulting messages to the console to ensure the program works under all possible scenarios.
+        Invoke the function four different times using different combinations of boolean values for
+        <code>isRaining</code> and <code>ownsUmbrella</code>, and log the resulting messages to the console to ensure
+        the program works under all possible scenarios.
     </p>
 
 
@@ -67,28 +76,64 @@
 
 
     <script type="text/javascript">
+        console.log("---------------------");
+        console.log("PART 1...");
 
-        console.log("---------------------")
-        console.log("PART 1...")
+        const isRaining = true;
+        const ownsUmbrella = false;
 
+        console.log("Is it raining?", isRaining);
+        console.log("Owns an umbrella?", ownsUmbrella);
 
+        if (!isRaining) {
+            console.log("Skies are clear");
+        } else {
+            if (ownsUmbrella) {
+                console.log("Bring your umbrella");
+            } else {
+                console.log("Buy an umbrella");
+            }
+        }
 
+        console.log("---------------------");
+        console.log("PART 2...");
 
+        function advise(isRaining, ownsUmbrella) {
+            if (!isRaining) {
+                return "Skies are clear";
+            } else {
+                return ownsUmbrella ? "Bring your umbrella" : "Buy an umbrella";
+            }
+        }
 
-        console.log("---------------------")
-        console.log("PART 2...")
+        // Test all 4 combinations
+        console.log("Case 1:", advise(false, false)); // Skies are clear
+        console.log("Case 2:", advise(false, true));  // Skies are clear
+        console.log("Case 3:", advise(true, false));  // Buy an umbrella
+        console.log("Case 4:", advise(true, true));   // Bring your umbrella
 
+        console.log("---------------------");
+        console.log("PART 3...");
 
+        document.getElementById("advise").addEventListener("click", function () {
+            const isRaining = document.getElementById("switch-raining").checked;
+            const ownsUmbrella = document.getElementById("switch-umbrella").checked;
 
+            const message = advise(isRaining, ownsUmbrella);
 
+            // Display on the page
+            document.getElementById("display-message").textContent = message;
 
-        console.log("---------------------")
-        console.log("PART 3...")
-
-
-
-
+            // Repopulate console log
+            console.log("---------------------");
+            console.log("ADVISING...");
+            console.log("Is it raining?", isRaining);
+            console.log("Owns umbrella?", ownsUmbrella);
+            console.log("Advice:", message);
+        });
 
     </script>
+
 </body>
+
 </html>

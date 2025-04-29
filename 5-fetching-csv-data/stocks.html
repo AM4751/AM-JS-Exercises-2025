@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Stocks (CSV)</title>
 </head>
+
 <body>
 
     <h1>Stocks (CSV)</h1>
@@ -14,7 +16,8 @@
         The CSV files contains historical stock data for a number of companies.
         There is a CSV file for each of the following symbols: AAPL, GOOGL, MSFT, NFLX, NVDA, and SPOT.
         The name of each CSV file follows a consistent format (e.g.
-        <a href="https://raw.githubusercontent.com/prof-rossetti/intro-software-dev-python-book/refs/heads/main/docs/data/daily_adjusted_NFLX.csv">"daily_adjusted_NFLX.csv"</a>
+        <a
+            href="https://raw.githubusercontent.com/prof-rossetti/intro-software-dev-python-book/refs/heads/main/docs/data/daily_adjusted_NFLX.csv">"daily_adjusted_NFLX.csv"</a>
         for NFLX).
         This data was originally obtained from the AlphaVantage API.
     </p>
@@ -27,23 +30,25 @@
         <strong>NOTE:</strong> Format all percentages with a percent sign and rounded to two decimals.
 
 
-        <ol type="A">
-            <li>Choose one of the stock symbols listed above (i.e. "NFLX"), and store it in a variable called <code>symbol</code>.</li>
-            <li>Dynamically compile the corresponding dataset URL using the <code>symbol</code> variable from Question A,
-                and store it in a variable called <code>requestUrl</code>.</li>
-            <li>Fetch stock data for the chosen symbol, using the <code>requestUrl</code> from Question B.</li>
-            <li>Display the number of days in the provided data (i.e. 100).
-                <strong>NOTE:</strong> It is sufficient to just count the number of row objects.
-            </li>
-            <li>Display the date and adjusted closing price on the earliest day (i.e. "2024-02-05" and "$562.06").
-            </li>
-            <li>
-                Display the date and adjusted closing price on the latest day (i.e. "2024-06-27" and "$684.34").
-            </li>
-            <li>
-                Calculate the overall percent change in adjusted closing price from the earliest to the latest day (i.e. "21.76%").
-            </li>
-        </ol>
+    <ol type="A">
+        <li>Choose one of the stock symbols listed above (i.e. "NFLX"), and store it in a variable called
+            <code>symbol</code>.</li>
+        <li>Dynamically compile the corresponding dataset URL using the <code>symbol</code> variable from Question A,
+            and store it in a variable called <code>requestUrl</code>.</li>
+        <li>Fetch stock data for the chosen symbol, using the <code>requestUrl</code> from Question B.</li>
+        <li>Display the number of days in the provided data (i.e. 100).
+            <strong>NOTE:</strong> It is sufficient to just count the number of row objects.
+        </li>
+        <li>Display the date and adjusted closing price on the earliest day (i.e. "2024-02-05" and "$562.06").
+        </li>
+        <li>
+            Display the date and adjusted closing price on the latest day (i.e. "2024-06-27" and "$684.34").
+        </li>
+        <li>
+            Calculate the overall percent change in adjusted closing price from the earliest to the latest day (i.e.
+            "21.76%").
+        </li>
+    </ol>
     </p>
 
 
@@ -53,15 +58,15 @@
         Display the answers on the page in the designated areas.
         <strong>NOTE:</strong> when applicable, use the same currency and percent formatting as in Part 1.
 
-        <ol type="A">
-            <li>Using the designated <code>span</code> elements below,
-                display the stock symbol,
-                the earliest day's date and adjusted closing price,
-                the latest day's date and adjusted closing price,
-                and the overall percent change.
-            </li>
+    <ol type="A">
+        <li>Using the designated <code>span</code> elements below,
+            display the stock symbol,
+            the earliest day's date and adjusted closing price,
+            the latest day's date and adjusted closing price,
+            and the overall percent change.
+        </li>
 
-        </ol>
+    </ol>
     </p>
 
     <hr>
@@ -88,28 +93,62 @@
         var filename = `daily_adjusted_${symbol}.csv`
         var requestUrl = `https://raw.githubusercontent.com/prof-rossetti/intro-software-dev-python-book/refs/heads/main/docs/data/${filename}`
 
-        d3.csv(requestUrl).then(function(data) {
+        d3.csv(requestUrl).then(function (data) {
             console.log("DATA:", data)
 
-            console.log("---------------------")
-            console.log("PART 1...")
+            console.log("---------------------");
+            console.log("PART 1...");
+
+            // A. Symbol already selected
+            // B. URL already compiled
+
+            // C. Fetch done (data is here)
+            const stockData = data;
+
+            // D. Number of days
+            console.log("D. Number of days:", stockData.length);
+
+            // E. Earliest day (last row in CSV because CSV is reverse-chronological)
+            const earliestDay = stockData[stockData.length - 1];
+            console.log("E. Earliest date:", earliestDay.timestamp);
+            console.log("E. Earliest adjusted close:", formatUSD(parseFloat(earliestDay.adjusted_close)));
+
+            // F. Latest day (first row)
+            const latestDay = stockData[0];
+            console.log("F. Latest date:", latestDay.timestamp);
+            console.log("F. Latest adjusted close:", formatUSD(parseFloat(latestDay.adjusted_close)));
+
+            // G. Overall percent change
+            const earliestPrice = parseFloat(earliestDay.adjusted_close);
+            const latestPrice = parseFloat(latestDay.adjusted_close);
+            const pctChange = (latestPrice - earliestPrice) / earliestPrice;
+            console.log("G. Percent change:", formatPct(pctChange));
+
+
+            console.log("---------------------");
+            console.log("PART 2...");
+
+            // A. Display on page
+            document.getElementById("display-symbol").textContent = symbol;
+
+            document.getElementById("display-earliest").textContent =
+                `${earliestDay.timestamp}: ${formatUSD(earliestPrice)}`;
+
+            document.getElementById("display-latest").textContent =
+                `${latestDay.timestamp}: ${formatUSD(latestPrice)}`;
+
+            document.getElementById("display-pct-change").textContent = formatPct(pctChange);
 
 
 
 
 
-            console.log("---------------------")
-            console.log("PART 2...")
 
-
-
-
-
-
-            }).catch(function(error) {
-                console.error("ERROR:", error)
+        }).catch(function (error) {
+            console.error("ERROR:", error)
         })
 
     </script>
 </body>
+
 </html>
